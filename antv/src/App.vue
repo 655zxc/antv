@@ -7,305 +7,188 @@ import G6 from "../node_modules/@antv/g6";
 export default {
   name: "App",
   mounted() {
+    // 定义数据源
     const data = {
+      // 点集
       nodes: [
         {
-          id: "1",
-          dataType: "alps",
-          name: "alps_file1",
+          id: "node1",
+          x: 100,
+          y: 100,
+          size: 60,
+          label: "第一层1",
           conf: [
             {
               label: "conf",
               value: "pai_graph.conf",
-            },
-            {
-              label: "dot",
-              value: "pai_graph.dot",
-            },
-            {
-              label: "init",
-              value: "init.rc",
             },
           ],
         },
         {
-          id: "2",
-          dataType: "alps",
-          name: "alps_file2",
-          conf: [
-            {
-              label: "conf",
-              value: "pai_graph.conf",
-            },
-            {
-              label: "dot",
-              value: "pai_graph.dot",
-            },
-            {
-              label: "init",
-              value: "init.rc",
-            },
-          ],
+          id: "node2",
+          x: 100,
+          y: 200,
+          size: 60,
+          label: "第二层1",
         },
         {
-          id: "3",
-          dataType: "alps",
-          name: "alps_file3",
-          conf: [
-            {
-              label: "conf",
-              value: "pai_graph.conf",
-            },
-            {
-              label: "dot",
-              value: "pai_graph.dot",
-            },
-            {
-              label: "init",
-              value: "init.rc",
-            },
-          ],
+          id: "node3",
+          x: 200,
+          y: 200,
+          size: 60,
+          label: "第二层2",
         },
         {
-          id: "4",
-          dataType: "sql",
-          name: "sql_file1",
-          conf: [
-            {
-              label: "conf",
-              value: "pai_graph.conf",
-            },
-            {
-              label: "dot",
-              value: "pai_graph.dot",
-            },
-            {
-              label: "init",
-              value: "init.rc",
-            },
-          ],
+          id: "node4",
+          x: 100,
+          y: 300,
+          size: 60,
+          label: "第三层1",
         },
         {
-          id: "5",
-          dataType: "sql",
-          name: "sql_file2",
-          conf: [
-            {
-              label: "conf",
-              value: "pai_graph.conf",
-            },
-            {
-              label: "dot",
-              value: "pai_graph.dot",
-            },
-            {
-              label: "init",
-              value: "init.rc",
-            },
-          ],
+          id: "node5",
+          x: 100,
+          y: 400,
+          size: 60,
+          label: "第四层1",
         },
         {
-          id: "6",
-          dataType: "feature_etl",
-          name: "feature_etl_1",
-          conf: [
-            {
-              label: "conf",
-              value: "pai_graph.conf",
-            },
-            {
-              label: "dot",
-              value: "pai_graph.dot",
-            },
-            {
-              label: "init",
-              value: "init.rc",
-            },
-          ],
+          id: "node6",
+          x: 200,
+          y: 400,
+          size: 60,
+          label: "第四层2",
         },
         {
-          id: "7",
-          dataType: "feature_etl",
-          name: "feature_etl_1",
-          conf: [
-            {
-              label: "conf",
-              value: "pai_graph.conf",
-            },
-            {
-              label: "dot",
-              value: "pai_graph.dot",
-            },
-            {
-              label: "init",
-              value: "init.rc",
-            },
-          ],
+          id: "node7",
+          x: 100,
+          y: 500,
+          size: 60,
+          label: "第五层1",
         },
         {
-          id: "8",
-          dataType: "feature_extractor",
-          name: "feature_extractor",
-          conf: [
-            {
-              label: "conf",
-              value: "pai_graph.conf",
-            },
-            {
-              label: "dot",
-              value: "pai_graph.dot",
-            },
-            {
-              label: "init",
-              value: "init.rc",
-            },
-          ],
+          id: "node8",
+          x: 200,
+          y: 500,
+          size: 60,
+          label: "第五层2",
+        },
+        {
+          id: "node9",
+          x: 100,
+          y: 600,
+          size: 60,
+          label: "第六层1",
         },
       ],
+      // 边集
       edges: [
+        // 表示一条从 node1 节点连接到 node2 节点的边
         {
-          source: "1",
-          target: "2",
+          source: "node1",
+          target: "node2",
         },
         {
-          source: "1",
-          target: "3",
+          source: "node1",
+          target: "node3",
         },
         {
-          source: "2",
-          target: "4",
+          source: "node2",
+          target: "node4",
         },
         {
-          source: "3",
-          target: "4",
+          source: "node3",
+          target: "node4",
         },
         {
-          source: "4",
-          target: "5",
+          source: "node4",
+          target: "node5",
         },
         {
-          source: "5",
-          target: "6",
+          source: "node4",
+          target: "node6",
         },
         {
-          source: "6",
-          target: "7",
+          source: "node5",
+          target: "node7",
         },
         {
-          source: "6",
-          target: "8",
+          source: "node6",
+          target: "node8",
+        },
+        {
+          source: "node7",
+          target: "node9",
+        },
+        {
+          source: "node8",
+          target: "node9",
+        },
+        {
+          source: "node8",
+          target: "node3",
+          type: "quadratic",
+          style: {
+            stroke: "red",
+            lineWidth:3,
+          },
+        },
+        {
+          source: "node8",
+          target: "node7",
+          type: "quadratic",
+          style: {
+            stroke: "red",
+            lineWidth:3,
+          },
         },
       ],
     };
 
-    G6.registerNode(
-      "sql",
-      {
-        drawShape(cfg, group) {
-          const rect = group.addShape("rect", {
-            attrs: {
-              x: -75,
-              y: -25,
-              width: 150,
-              height: 50,
-              radius: 10,
-              stroke: "#5B8FF9",
-              fill: "#C6E5FF",
-              lineWidth: 3,
-            },
-            name: "rect-shape",
-          });
-          if (cfg.name) {
-            group.addShape("text", {
-              attrs: {
-                text: cfg.name,
-                x: 0,
-                y: 0,
-                fill: "#00287E",
-                fontSize: 14,
-                textAlign: "center",
-                textBaseline: "middle",
-                fontWeight: "bold",
-              },
-              name: "text-shape",
-            });
-          }
-          return rect;
-        },
-      },
-      "single-node"
-    );
-
-    const container = document.getElementById("container");
-    const width = container.scrollWidth;
-    const height = container.scrollHeight || 500;
+    // 创建 G6 图实例
     const graph = new G6.Graph({
-      container: "container",
-      width,
-      height,
-      layout: {
-        type: "dagre",
-        nodesepFunc: (d) => {
-          if (d.id === "3") {
-            return 500;
-          }
-          return 50;
-        },
-        ranksep: 70,
-        controlPoints: true,
-      },
+      container: "container", // 指定图画布的容器 id，与第 9 行的容器对应
+      // 画布宽高
+      width: 1750,
+      height: 1600,
       defaultNode: {
-        type: "sql",
+        style: {
+          fill: "steelblue", // 节点填充色
+          stroke: "#66ccff", // 节点描边色
+          lineWidth: 1, // 节点描边粗细
+        },
+        // 节点上的标签文本配置
+        labelCfg: {
+          // 节点上的标签文本样式配置
+          style: {
+            fill: "#fff", // 节点标签文字颜色
+          },
+        },
       },
       defaultEdge: {
-        type: "polyline",
         style: {
-          radius: 20,
-          offset: 45,
           endArrow: true,
-          lineWidth: 2,
-          stroke: "#C2C8D5",
-        },
-      },
-      nodeStateStyles: {
-        selected: {
-          stroke: "#d9d9d9",
-          fill: "#5394ef",
+
+          opacity: 0.6, // 边透明度
+          stroke: "grey", // 边描边颜色
         },
       },
       modes: {
-        default: [
-          "drag-canvas",
-          "zoom-canvas",
-          "click-select",
-          {
-            type: "tooltip",
-            formatText(model) {
-              const cfg = model.conf;
-              const text = [];
-              cfg.forEach((row) => {
-                text.push(row.label + ":" + row.value + "<br>");
-              });
-              return text.join("\n");
-            },
-            offset: 30,
-          },
-        ],
+        // 支持的 behavior
+        default: ["drag-canvas", "zoom-canvas"],
       },
-      fitView: true,
     });
+    // 读取数据
     graph.data(data);
+    // 渲染图
     graph.render();
-
-    if (typeof window !== "undefined")
-      window.onresize = () => {
-        if (!graph || graph.get("destroyed")) return;
-        if (!container || !container.scrollWidth || !container.scrollHeight)
-          return;
-        graph.changeSize(container.scrollWidth, container.scrollHeight);
-      };
   },
 };
 </script>
 
-<style></style>
+<style>
+#container {
+  box-shadow: 0px 0px 5px #ccc;
+  border-radius: 8px;
+}
+</style>
