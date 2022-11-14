@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "@antv/g6": "^4.7.12",
+    "ant-design-vue": "^1.7.2",
     "core-js": "^3.8.3",
     "insert-css": "^2.0.0",
-    "vue": "^2.6.14"
+    "vue": "^2.6.14",
+    "vue-json-editor": "^1.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
