@@ -1,9 +1,36 @@
 <template>
   <div class="box">
     <div class="menu" ref="menu">
-      <!-- <a-button class="btn1" @click="showUpEdge">仅显示向上的边</a-button> -->
+
+      <div class="selectLabel">向下边类型</div>
+      <a-select
+        :options="options1"
+        style="width: 80px"
+        @change="handleChange1"
+        v-model="value1"
+      >
+      
+      </a-select>
+      <div class="selectLabel">向上边类型</div>
+      <a-select
+        :options="options2"
+        style="width: 80px"
+        @change="handleChange2"
+        v-model="value2"
+      >
+      </a-select>
       <a-button class="btn2" @click="showEditor">编辑数据</a-button>
       <a-button class="btn3" @click="adjustSpace">调整样式</a-button>
+      <a-button class="btn4" @click="showClickNodeButton">当前点击表</a-button>
+    </div>
+
+    <div class="menu2" ref="menu2">
+      <a-checkbox @change="onChangeSCC"  :checked="checkSCC">
+        存在SCC循环的节点
+      </a-checkbox>
+      <a-checkbox @change="onChangeNotSCC" :checked="checkNotSCC">
+        不存在SCC循环的节点
+      </a-checkbox>
     </div>
 
     <div class="adjustCard">
@@ -12,13 +39,23 @@
         ><a-input v-model="distanceX" placeholder="Basic usage" />
         <span>节点纵间距</span
         ><a-input v-model="distanceY" placeholder="Basic usage" />
-        <span>节点大小</span
-        ><a-input v-model="nodeSize" placeholder="Basic usage" />
+        <span>节点宽</span
+        ><a-input v-model="nodeWidth" placeholder="Basic usage" />
+        <span>节点高</span
+        ><a-input v-model="nodeHeight" placeholder="Basic usage" />
         <span>字体大小</span
         ><a-input v-model="fontSize" placeholder="Basic usage" />
         <p class="adjustBtn">
           <a-button type="primary" @click="adjust"> 确定 </a-button>
         </p>
+      </a-card>
+    </div>
+
+    <div class="showNode" ref="showNode">
+      <a-card style="width: 300px">
+        <div>表id:<br>{{clickNode.id}}</div>
+        <div>表名:<br>{{clickNode.name}}</div>
+        <div>表层级:<br>{{clickNode.level}}</div>
       </a-card>
     </div>
 
@@ -47,7 +84,7 @@ export default {
     return {
       jsonEditor: {
         points: [
-          { id: "11", name: "11", tip: "Graph 11", level: 0 },
+          { id: "11", name: "111111111111111111111111111111111111111111111", tip: "Graph 11", level: 0 },
           { id: "21", name: "21", tip: "Graph 21", level: 1 },
           { id: "22", name: "22", tip: "Graph 22", level: 1 },
           { id: "23", name: "23", tip: "Graph 23", level: 1 },
@@ -202,7 +239,6 @@ export default {
           { from: "123", to: "131" },
           { from: "124", to: "131" },
           { from: "125", to: "131" },
-
           { from: "121", to: "34" },
           { from: "111", to: "65" },
           { from: "101", to: "52" },
@@ -217,16 +253,76 @@ export default {
           { from: "41", to: "23" },
           { from: "52", to: "45" },
         ],
+        scc:[
+          ["11","21","31","44"],
+          ["57","63","75"]
+        ]
       }, //json数据
-      data: null, //由json转化的G6的数据
+      //由json转化的G6的数据
+      data: null, //SCC + 非SCC 节点的数据
+      data2:null, //SCC 节点的数据
+      data3:null,//非SCC 节点的数据
+      data4:[],//无数据
       graph: null, //G6的实例
       isShowEditor: false,
       isShowAdjustSpace: false,
+      isShowClickNode:false,
+      value1:"line",
+      value2:"line",
+      clickNode:{
+        id:null,
+        name:null,
+        level:null
+      },
+      checkSCC:true,
+      checkNotSCC:true,
 
-      distanceX: 150,
-      distanceY: 200,
-      nodeSize: 50,
+      distanceX: 350,
+      distanceY: 250,
+      nodeWidth:200,
+      nodeHeight:50,
       fontSize: 30,
+
+      options1: [
+        {
+          label: "直线",
+          value: "line",
+        },
+        {
+          label: "曲线",
+          value: "quadratic",
+        },
+        {
+          label: "折线",
+          value: "polyline",
+        },
+        {
+          label: "圆弧",
+          value: "arc",
+        },
+        {
+          label: "隐藏",
+          value: "hide",  
+        }
+      ],
+      options2: [
+        {
+          label: "直线",
+          value: "line",
+        },
+        {
+          label: "曲线",
+          value: "quadratic",
+        },
+        {
+          label: "折线",
+          value: "polyline",
+        },
+        {
+          label: "圆弧",
+          value: "arc",
+        }
+      ],
     };
   },
   components: {
@@ -254,6 +350,8 @@ export default {
       let y;
       //计算节点
       let nodes = [];
+      let nodes2 = []
+      let nodes3 = []
       let floorMax = 0;
       arr.forEach((p) => {
         floorMax = floorMax > p.length ? floorMax : p.length;
@@ -263,14 +361,45 @@ export default {
         y = this.distanceY * (i + 1);
         for (let j = 0; j < arr[i].length; j++) {
           x = this.distanceX * (j + 1 + (floorMax - arr[i].length) / 2);
-          let obj = {
+          //检查是否是scc节点
+          let isSccNode = false
+          this.jsonEditor.scc.forEach(p=>{
+            p.forEach(q=>{
+              if( arr[i][j].id == q){
+                isSccNode = true
+              }
+            })
+          })
+          let obj
+          if(isSccNode){
+            obj = {
+            id: arr[i][j].id,
+            x,
+            y,
+            label: arr[i][j].name,
+            conf: arr[i][j].tip,
+            style: {
+            fill: "#D8BFD8",
+          },
+          };
+          }
+          else{
+            obj = {
             id: arr[i][j].id,
             x,
             y,
             label: arr[i][j].name,
             conf: arr[i][j].tip,
           };
+          }
+           
           nodes.push(obj);
+          if(isSccNode){
+            nodes2.push(obj)
+          }
+          else{
+            nodes3.push(obj)
+          }
         }
       }
 
@@ -297,8 +426,13 @@ export default {
             type: "line",
             style: {
               stroke: "red",
-              lineWidth: 4,
             },
+            // label: `${p.from}->${p.to}`,
+            // labelCfg:{
+            //   style:{
+            //     fontSize:25,
+            //   }
+            // }
           };
         } else {
           obj = {
@@ -309,9 +443,17 @@ export default {
         edges.push(obj);
       });
       this.data = {
-        nodes,
-        edges,
+        nodes:nodes,
+        edges:edges,
       };
+      this.data2 = {
+        nodes:nodes2,
+        edges:edges,
+      }
+      this.data3 = {
+        nodes:nodes3,
+        edges:edges,
+      }
     },
     drawGraph() {
       // 定义数据源
@@ -324,7 +466,8 @@ export default {
         // 画布宽高
         defaultNode: {
           //节点的默认配置
-          size: this.nodeSize,
+          type:"rect",
+          size: [parseInt(this.nodeWidth),parseInt(this.nodeHeight)],
           style: {
             stroke: "#5B8FF9",
             fill: "#C6E5FF",
@@ -358,7 +501,7 @@ export default {
         defaultEdge: {
           style: {
             endArrow: true,
-            lineWidth: 2,
+            lineWidth: 4,
             opacity: 0.6, // 边透明度
             stroke: "grey", // 边描边颜色
           },
@@ -404,7 +547,9 @@ export default {
         const nodeItem = e.item; // 获取被点击的节点元素对象
         graph.setItemState(nodeItem, "click", true); // 设置当前节点的 click 状态为 true
 
-        console.log(e);
+        
+        //展示点击节点信息
+        this.showClickNode(e.item._cfg.id)
       });
       // 读取数据
       graph.data(data);
@@ -426,7 +571,7 @@ export default {
       setTimeout(() => {
         this.graph.node(() => {
           return {
-            size: this.nodeSize,
+            size: [parseInt(this.nodeWidth),parseInt(this.nodeHeight)],
             labelCfg: {
               style: {
                 fontSize: parseInt(this.fontSize),
@@ -437,6 +582,9 @@ export default {
         this.getData(); //更新数据data
         this.graph.data(this.data); //使用数据data
         this.graph.render();
+
+        //数据更新后 根据checkbox的选项再渲染一次
+        this.onChange()
       }, 0);
     },
     showEditor() {
@@ -453,8 +601,138 @@ export default {
         this.getData(); //更新数据data
         this.graph.data(this.data); //使用数据data
         this.graph.render();
+
+        //数据更新后 根据checkbox的选项再渲染一次
+        this.onChange()
       }, 0);
+
+
     },
+    //修改向下的线
+    //value 和 this.value1是相同的
+    //使用graph.data更新data,然后render,发现这些配置还在?
+    //因为data1234的里面重复的node都用的同一个对象,而这里把data里的对象改了
+    handleChange1(value) {
+      //更新边的配置
+
+      if(value == "hide"){
+        this.graph.edge((edge) => {
+        if(edge.style.stroke == "grey"){
+          return {
+            type: "line",//这里value等于hide 隐藏后不关心样式 直接设置为line
+            style: {
+            opacity: 0, // 边透明度
+          },
+          };
+        }
+        else{
+          return {
+            type: this.value2,
+            style: {
+            opacity:this.value2=="hide"?0:0.6, // 边透明度 
+          },
+          };
+        }
+      });
+
+      }
+      else{
+        this.graph.edge((edge) => {
+        //根据颜色判断是向上还是向下
+        if(edge.style.stroke == "grey"){
+          return {
+            type: value,
+            style: {
+            opacity: 0.6, // 边透明度
+          },
+          };
+        }
+        else{
+          return {
+            type: this.value2,
+            style: {
+            opacity: 0.6, // 边透明度
+          },
+          };
+        }
+      });
+      }
+      this.graph.render();
+    },
+    handleChange2(value) {
+      this.graph.edge((edge) => {
+        //根据颜色判断是向上还是向xia
+        if(edge.style.stroke == "grey"){
+          return {
+            type: this.value1, //如果value1是hide,由于g6没有hide,会隐藏,达到同样的效果
+          };
+        }
+        else{
+          return {
+            type: value,
+          };
+        }
+      });
+      this.graph.render();
+    },
+    //由点击节点触发
+    showClickNode(id){
+      this.isShowClickNode = true
+      //弹出右侧框
+      this.$refs.showNode.style.right = 0 + 'px' 
+      let node
+      this.jsonEditor.points.forEach(p=>{
+        if(id == p.id){
+          node = p
+        }
+      })  
+      this.clickNode.id = node.id
+      this.clickNode.name = node.name
+      this.clickNode.level = node.level
+    },
+    //由点击按钮触发
+    showClickNodeButton(){
+      this.isShowClickNode = !this.isShowClickNode
+      if(this.isShowClickNode){
+        this.$refs.showNode.style.right = 0 + 'px' 
+      }
+      else{
+        this.$refs.showNode.style.right = -300 + 'px' 
+      }
+    },
+    //点击checkbox触发 显示相应数据
+    onChange(){
+      let data = []
+      if(this.checkSCC){
+        if(this.checkNotSCC){
+          data = this.data
+        }
+        else{
+          data = this.data2
+        }
+      }
+      else{
+        if(this.checkNotSCC){
+          data = this.data3
+        }
+        else{
+          data = this.data4
+        }
+      }
+      // 读取数据
+      this.graph.data(data);
+      // 渲染图
+      this.graph.render();
+    },
+    onChangeSCC(){
+      this.checkSCC = !this.checkSCC
+      this.onChange()
+    },
+    onChangeNotSCC(){
+      this.checkNotSCC = !this.checkNotSCC
+      this.onChange()
+    }
+
   },
   mounted() {
     // this.jsonEditor = json
@@ -498,6 +776,18 @@ body {
   top: 100px;
 }
 
+.showNode {
+  position: absolute;
+  z-index: 999;
+  transition: 0.3s;
+  right: -300px;
+  top: 500px;
+}
+
+.showNode div{
+  word-break: break-all;
+}
+
 .jsonEditor {
   height: 100%;
   display: flex;
@@ -535,7 +825,23 @@ body {
   justify-content: space-around;
 }
 
-.menu .ant-btn{
+.menu2{
+  position: absolute;
+  right: 20px;
+  top: 60px;
+  display: flex;
+  z-index: 9999;
+  height: 30px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.menu2 .ant-checkbox-wrapper{
+  margin-right: 20px;
+}
+
+.menu .ant-btn,
+.menu .ant-select {
   margin-right: 20px;
 }
 
@@ -546,4 +852,11 @@ body {
   border: 1px solid #e2e2e2;
   border-radius: 4px;
 }
+
+.selectLabel{
+  line-height: 30px;
+  margin-right: 4px;
+}
+
+
 </style>

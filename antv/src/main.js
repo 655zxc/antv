@@ -13,8 +13,11 @@ Vue.component(Card.name, Card);
 import Input from 'ant-design-vue/lib/input';
 Vue.component(Input.name, Input);
 
+import Select from 'ant-design-vue/lib/select';
+Vue.component(Select.name, Select);
 
-
+import Checkbox from 'ant-design-vue/lib/checkbox';
+Vue.component(Checkbox.name, Checkbox);
 
 new Vue({
   render: h => h(App),
