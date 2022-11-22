@@ -1,7 +1,6 @@
 <template>
   <div class="box">
     <div class="menu" ref="menu">
-
       <div class="selectLabel">向下边类型</div>
       <a-select
         :options="options1"
@@ -9,7 +8,6 @@
         @change="handleChange1"
         v-model="value1"
       >
-      
       </a-select>
       <div class="selectLabel">向上边类型</div>
       <a-select
@@ -25,7 +23,7 @@
     </div>
 
     <div class="menu2" ref="menu2">
-      <a-checkbox @change="onChangeSCC"  :checked="checkSCC">
+      <a-checkbox @change="onChangeSCC" :checked="checkSCC">
         存在SCC循环的节点
       </a-checkbox>
       <a-checkbox @change="onChangeNotSCC" :checked="checkNotSCC">
@@ -53,9 +51,9 @@
 
     <div class="showNode" ref="showNode">
       <a-card style="width: 300px">
-        <div>表id:<br>{{clickNode.id}}</div>
-        <div>表名:<br>{{clickNode.name}}</div>
-        <div>表层级:<br>{{clickNode.level}}</div>
+        <div>表id:<br />{{ clickNode.id }}</div>
+        <div>表名:<br />{{ clickNode.name }}</div>
+        <div>表层级:<br />{{ clickNode.level }}</div>
       </a-card>
     </div>
 
@@ -83,206 +81,712 @@ export default {
   data() {
     return {
       jsonEditor: {
-        points: [
-          { id: "11", name: "111111111111111111111111111111111111111111111", tip: "Graph 11", level: 0 },
-          { id: "21", name: "21", tip: "Graph 21", level: 1 },
-          { id: "22", name: "22", tip: "Graph 22", level: 1 },
-          { id: "23", name: "23", tip: "Graph 23", level: 1 },
-          { id: "31", name: "31", tip: "Graph 31", level: 2 },
-          { id: "32", name: "32", tip: "Graph 32", level: 2 },
-          { id: "33", name: "33", tip: "Graph 33", level: 2 },
-          { id: "34", name: "34", tip: "Graph 34", level: 2 },
-          { id: "41", name: "41", tip: "Graph 41", level: 3 },
-          { id: "42", name: "42", tip: "Graph 42", level: 3 },
-          { id: "43", name: "43", tip: "Graph 43", level: 3 },
-          { id: "44", name: "44", tip: "Graph 44", level: 3 },
-          { id: "45", name: "45", tip: "Graph 45", level: 3 },
-          { id: "51", name: "51", tip: "Graph 51", level: 4 },
-          { id: "52", name: "52", tip: "Graph 52", level: 4 },
-          { id: "53", name: "53", tip: "Graph 53", level: 4 },
-          { id: "54", name: "54", tip: "Graph 54", level: 4 },
-          { id: "55", name: "55", tip: "Graph 55", level: 4 },
-          { id: "56", name: "56", tip: "Graph 56", level: 4 },
-          { id: "57", name: "57", tip: "Graph 57", level: 4 },
-          { id: "58", name: "58", tip: "Graph 58", level: 4 },
-          { id: "59", name: "59", tip: "Graph 59", level: 4 },
-          { id: "61", name: "61", tip: "Graph 61", level: 5 },
-          { id: "62", name: "62", tip: "Graph 62", level: 5 },
-          { id: "63", name: "63", tip: "Graph 63", level: 5 },
-          { id: "64", name: "64", tip: "Graph 64", level: 5 },
-          { id: "65", name: "65", tip: "Graph 65", level: 5 },
-          { id: "66", name: "66", tip: "Graph 66", level: 5 },
-          { id: "67", name: "67", tip: "Graph 67", level: 5 },
-          { id: "71", name: "71", tip: "Graph 71", level: 6 },
-          { id: "72", name: "72", tip: "Graph 72", level: 6 },
-          { id: "73", name: "73", tip: "Graph 73", level: 6 },
-          { id: "74", name: "74", tip: "Graph 74", level: 6 },
-          { id: "75", name: "75", tip: "Graph 75", level: 6 },
-          { id: "81", name: "81", tip: "Graph 81", level: 7 },
-          { id: "82", name: "82", tip: "Graph 82", level: 7 },
-          { id: "83", name: "83", tip: "Graph 83", level: 7 },
-          { id: "84", name: "84", tip: "Graph 84", level: 7 },
-          { id: "85", name: "85", tip: "Graph 85", level: 7 },
-          { id: "86", name: "86", tip: "Graph 86", level: 7 },
-          { id: "87", name: "87", tip: "Graph 87", level: 7 },
-          { id: "88", name: "88", tip: "Graph 88", level: 7 },
-          { id: "89", name: "89", tip: "Graph 89", level: 7 },
-          { id: "91", name: "91", tip: "Graph 91", level: 8 },
-          { id: "92", name: "92", tip: "Graph 92", level: 8 },
-          { id: "93", name: "93", tip: "Graph 93", level: 8 },
-          { id: "101", name: "101", tip: "Graph 101", level: 9 },
-          { id: "102", name: "102", tip: "Graph 102", level: 9 },
-          { id: "103", name: "103", tip: "Graph 103", level: 9 },
-          { id: "111", name: "111", tip: "Graph 111", level: 10 },
-          { id: "112", name: "112", tip: "Graph 112", level: 10 },
-          { id: "113", name: "113", tip: "Graph 113", level: 10 },
-          { id: "121", name: "121", tip: "Graph 121", level: 11 },
-          { id: "122", name: "122", tip: "Graph 122", level: 11 },
-          { id: "123", name: "123", tip: "Graph 123", level: 11 },
-          { id: "124", name: "124", tip: "Graph 124", level: 11 },
-          { id: "125", name: "125", tip: "Graph 125", level: 11 },
-          { id: "131", name: "131", tip: "Graph 131", level: 12 },
-        ],
         lines: [
-          { from: "11", to: "21" },
-          { from: "11", to: "22" },
-          { from: "11", to: "23" },
-          { from: "21", to: "31" },
-          { from: "21", to: "34" },
-          { from: "22", to: "33" },
-          { from: "23", to: "32" },
-          { from: "31", to: "44" },
-          { from: "32", to: "45" },
-          { from: "33", to: "41" },
-          { from: "34", to: "42" },
-          { from: "34", to: "43" },
-          { from: "41", to: "54" },
-          { from: "42", to: "53" },
-          { from: "42", to: "56" },
-          { from: "42", to: "59" },
-          { from: "43", to: "58" },
-          { from: "43", to: "52" },
-          { from: "44", to: "57" },
-          { from: "44", to: "55" },
-          { from: "45", to: "56" },
-          { from: "45", to: "51" },
-          { from: "51", to: "67" },
-          { from: "52", to: "65" },
-          { from: "53", to: "64" },
-          { from: "54", to: "66" },
-          { from: "55", to: "62" },
-          { from: "56", to: "67" },
-          { from: "57", to: "63" },
-          { from: "58", to: "64" },
-          { from: "59", to: "61" },
-          { from: "61", to: "75" },
-          { from: "62", to: "73" },
-          { from: "63", to: "75" },
-          { from: "64", to: "72" },
-          { from: "65", to: "75" },
-          { from: "66", to: "71" },
-          { from: "67", to: "75" },
-          { from: "67", to: "74" },
-          { from: "71", to: "81" },
-          { from: "71", to: "89" },
-          { from: "72", to: "85" },
-          { from: "72", to: "85" },
-          { from: "73", to: "81" },
-          { from: "73", to: "86" },
-          { from: "73", to: "86" },
-          { from: "73", to: "83" },
-          { from: "74", to: "87" },
-          { from: "74", to: "82" },
-          { from: "74", to: "84" },
-          { from: "74", to: "88" },
-          { from: "74", to: "83" },
-          { from: "75", to: "84" },
-          { from: "75", to: "82" },
-          { from: "75", to: "81" },
-          { from: "87", to: "92" },
-          { from: "81", to: "91" },
-          { from: "84", to: "91" },
-          { from: "88", to: "93" },
-          { from: "89", to: "93" },
-          { from: "84", to: "92" },
-          { from: "83", to: "92" },
-          { from: "89", to: "91" },
-          { from: "86", to: "92" },
-          { from: "85", to: "93" },
-          { from: "82", to: "92" },
-          { from: "81", to: "91" },
-          { from: "91", to: "101" },
-          { from: "91", to: "102" },
-          { from: "91", to: "103" },
-          { from: "92", to: "101" },
-          { from: "92", to: "102" },
-          { from: "92", to: "103" },
-          { from: "93", to: "101" },
-          { from: "93", to: "102" },
-          { from: "93", to: "103" },
-          { from: "101", to: "112" },
-          { from: "101", to: "113" },
-          { from: "102", to: "112" },
-          { from: "102", to: "113" },
-          { from: "103", to: "111" },
-          { from: "103", to: "113" },
-          { from: "111", to: "125" },
-          { from: "113", to: "123" },
-          { from: "112", to: "125" },
-          { from: "112", to: "124" },
-          { from: "112", to: "123" },
-          { from: "113", to: "122" },
-          { from: "113", to: "121" },
-          { from: "111", to: "121" },
-          { from: "121", to: "131" },
-          { from: "122", to: "131" },
-          { from: "123", to: "131" },
-          { from: "124", to: "131" },
-          { from: "125", to: "131" },
-          { from: "121", to: "34" },
-          { from: "111", to: "65" },
-          { from: "101", to: "52" },
-          { from: "91", to: "75" },
-          { from: "131", to: "86" },
-          { from: "88", to: "54" },
-          { from: "75", to: "57" },
-          { from: "44", to: "11" },
-          { from: "103", to: "51" },
-          { from: "81", to: "59" },
-          { from: "62", to: "21" },
-          { from: "41", to: "23" },
-          { from: "52", to: "45" },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed55091757096abf8d9bf316d877f7",
+          },
+          {
+            from: "11ed47a716495ad78b0c5dd3411e5ae6",
+            to: "11ed55091757096abf8d9bf316d877f7",
+          },
+          {
+            from: "11ed5694755b7571bf8d3117534e83dc",
+            to: "11ed55091757096abf8d9bf316d877f7",
+          },
+          {
+            from: "11ed4abe2b86a759ab6c7bc118077866",
+            to: "11ed55091757096abf8d9bf316d877f7",
+          },
+          {
+            from: "11ed4e125645dbb4b52fd7f035ea70fc",
+            to: "11ed55091757096abf8d9bf316d877f7",
+          },
+          {
+            from: "11ed4e1372ab7e7eb52f51859441d9af",
+            to: "11ed55091757096abf8d9bf316d877f7",
+          },
+          {
+            from: "11ed4abf5c518a5eab6c79ca1c2f3745",
+            to: "11ed55091757096abf8d9bf316d877f7",
+          },
+          {
+            from: "11ed4ab9eb45ab74ab6cfffb1df92105",
+            to: "11ed55091757096abf8d9bf316d877f7",
+          },
+          {
+            from: "11ed4abf5c518a5eab6c79ca1c2f3745",
+            to: "11ed4ab9eb45ab74ab6cfffb1df92105",
+          },
+          {
+            from: "11ed47a716495ad78b0c5dd3411e5ae6",
+            to: "11ed5694755b7571bf8d3117534e83dc",
+          },
+          {
+            from: "11ed4abe2b86a759ab6c7bc118077866",
+            to: "11ed4abf5c518a5eab6c79ca1c2f3745",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed5694755b7571bf8d3117534e83dc",
+          },
+          {
+            from: "11ed47c52ae7b1b48b0c31aa6af07f27",
+            to: "11ed4ab9eb45ab74ab6cfffb1df92105",
+          },
+          {
+            from: "11ed4e1108307f93b52f711949535c39",
+            to: "11ed4e125645dbb4b52fd7f035ea70fc",
+          },
+          {
+            from: "11ed47a716495ad78b0c5dd3411e5ae6",
+            to: "11ed4abe2b86a759ab6c7bc118077866",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed4abe2b86a759ab6c7bc118077866",
+          },
+          {
+            from: "11ed4abf5c518a5eab6c79ca1c2f3745",
+            to: "11ed4e125645dbb4b52fd7f035ea70fc",
+          },
+          {
+            from: "11ed4af4fc65835d9cd363e711dc958a",
+            to: "11ed4abf5c518a5eab6c79ca1c2f3745",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed4e1372ab7e7eb52f51859441d9af",
+          },
+          {
+            from: "11ed4abf5c518a5eab6c79ca1c2f3745",
+            to: "11ed4e1372ab7e7eb52f51859441d9af",
+          },
+          {
+            from: "11ed4ab9eb45ab74ab6cfffb1df92105",
+            to: "11ed4e125645dbb4b52fd7f035ea70fc",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed4e125645dbb4b52fd7f035ea70fc",
+          },
+          {
+            from: "11ed4ab9eb45ab74ab6cfffb1df92105",
+            to: "11ed4e1372ab7e7eb52f51859441d9af",
+          },
+          {
+            from: "11ed4f7322c607d78c968fb192178199",
+            to: "11ed4abf5c518a5eab6c79ca1c2f3745",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed4abf5c518a5eab6c79ca1c2f3745",
+          },
+          {
+            from: "11ed4e125645dbb4b52fd7f035ea70fc",
+            to: "11ed4abf5c518a5eab6c79ca1c2f3745",
+          },
+          {
+            from: "11ed4abe2b86a759ab6c7bc118077866",
+            to: "11ed5694755b7571bf8d3117534e83dc",
+          },
+          {
+            from: "11ed5694755b7571bf8d3117534e83dc",
+            to: "11ed4abf5c518a5eab6c79ca1c2f3745",
+          },
+          {
+            from: "11ed4e1108307f93b52f711949535c39",
+            to: "11ed4e1372ab7e7eb52f51859441d9af",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed4abf5c518a5eab6c79ca1c2f3745",
+          },
+          {
+            from: "11ed4ab9eb45ab74ab6cfffb1df92105",
+            to: "11ed4abf5c518a5eab6c79ca1c2f3745",
+          },
+          {
+            from: "11ed494228b84f31ad416faaaf225897",
+            to: "11ed4ab9eb45ab74ab6cfffb1df92105",
+          },
+          {
+            from: "11ed4f756b0e24218c9693317591e101",
+            to: "11ed4e1108307f93b52f711949535c39",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed494228b84f31ad416faaaf225897",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed47c52ae7b1b48b0c31aa6af07f27",
+          },
+          {
+            from: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+            to: "11ed4e1108307f93b52f711949535c39",
+          },
+          {
+            from: "11ed4af4fc65835d9cd363e711dc958a",
+            to: "11ed4e1108307f93b52f711949535c39",
+          },
+          {
+            from: "11ed49284dc9e611ad41e792b5469257",
+            to: "11ed4e1108307f93b52f711949535c39",
+          },
+          {
+            from: "11ed48476c9b055b88644b35f89b6fbb",
+            to: "11ed4e1108307f93b52f711949535c39",
+          },
+          {
+            from: "11ed4dbd5336ef2ab52f0b5eef368153",
+            to: "11ed4e1108307f93b52f711949535c39",
+          },
+          {
+            from: "11ed4f7322c607d78c968fb192178199",
+            to: "11ed4e1108307f93b52f711949535c39",
+          },
+          {
+            from: "11ed47c52ae7b1b48b0c31aa6af07f27",
+            to: "11ed494228b84f31ad416faaaf225897",
+          },
+          {
+            from: "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+            to: "11ed4e1108307f93b52f711949535c39",
+          },
+          {
+            from: "11ed4e125645dbb4b52fd7f035ea70fc",
+            to: "11ed4e1108307f93b52f711949535c39",
+          },
+          {
+            from: "11ed4abf5c518a5eab6c79ca1c2f3745",
+            to: "11ed4e1108307f93b52f711949535c39",
+          },
+          {
+            from: "11ed4af99a7f4f8e9cd365b61fcdeb4c",
+            to: "11ed4dbd5336ef2ab52f0b5eef368153",
+          },
+          {
+            from: "11ed4f800af6adea8c96b1b4cad18b89",
+            to: "11ed48476c9b055b88644b35f89b6fbb",
+          },
+          {
+            from: "11ed48476c9b055b88644b35f89b6fbb",
+            to: "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+          },
+          {
+            from: "11ed4f800af6adea8c96b1b4cad18b89",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed4dbd5336ef2ab52f0b5eef368153",
+          },
+          {
+            from: "11ed55a817415e6bbf8dfdf50d0ca358",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed47a0802104118b0c71da0524036d",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed4e1108307f93b52f711949535c39",
+            to: "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+          },
+          {
+            from: "11ed4af4fc65835d9cd363e711dc958a",
+            to: "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed4dbd5336ef2ab52f0b5eef368153",
+          },
+          {
+            from: "11ed4abf5c518a5eab6c79ca1c2f3745",
+            to: "11ed4dbd5336ef2ab52f0b5eef368153",
+          },
+          {
+            from: "11ed4a9c71b95bd4ba124fc11388f162",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed4dbc97ec762bb52fa3952e31d8ba",
+            to: "11ed4dbd5336ef2ab52f0b5eef368153",
+          },
+          {
+            from: "11ed4f756b0e24218c9693317591e101",
+            to: "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+          },
+          {
+            from: "11ed4abf5c518a5eab6c79ca1c2f3745",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+          },
+          {
+            from: "11ed4ab9eb45ab74ab6cfffb1df92105",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed4af4fc65835d9cd363e711dc958a",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed4abf5c518a5eab6c79ca1c2f3745",
+            to: "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+          },
+          {
+            from: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+            to: "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+          },
+          {
+            from: "11ed4dbd5336ef2ab52f0b5eef368153",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed49284dc9e611ad41e792b5469257",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed4af4fc65835d9cd363e711dc958a",
+            to: "11ed4dbd5336ef2ab52f0b5eef368153",
+          },
+          {
+            from: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+            to: "11ed4dbd5336ef2ab52f0b5eef368153",
+          },
+          {
+            from: "11ed4ba6151cb3229cd31523377c35da",
+            to: "11ed4dbd5336ef2ab52f0b5eef368153",
+          },
+          {
+            from: "11ed493d0b698245ad41abb48157cfe0",
+            to: "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+          },
+          {
+            from: "11ed492d892d80efad4113b58d3f9794",
+            to: "11ed48476c9b055b88644b35f89b6fbb",
+          },
+          {
+            from: "11ed48476c9b055b88644b35f89b6fbb",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed4ba3f25543b99cd3993ff27c0af0",
+            to: "11ed4dbd5336ef2ab52f0b5eef368153",
+          },
+          {
+            from: "11ed4f756b0e24218c9693317591e101",
+            to: "11ed48476c9b055b88644b35f89b6fbb",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed49284dc9e611ad41e792b5469257",
+          },
+          {
+            from: "11ed4af7c40f7bce9cd36d65b52859f3",
+            to: "11ed4dbd5336ef2ab52f0b5eef368153",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            from: "11ed4abf5c518a5eab6c79ca1c2f3745",
+            to: "11ed48476c9b055b88644b35f89b6fbb",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed48476c9b055b88644b35f89b6fbb",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed4dbc97ec762bb52fa3952e31d8ba",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed4ba6151cb3229cd31523377c35da",
+          },
+          {
+            from: "11ed4af99a7f4f8e9cd365b61fcdeb4c",
+            to: "11ed4ba6151cb3229cd31523377c35da",
+          },
+          {
+            from: "11ed4af4fc65835d9cd363e711dc958a",
+            to: "11ed55a817415e6bbf8dfdf50d0ca358",
+          },
+          {
+            from: "11ed4af4fc65835d9cd363e711dc958a",
+            to: "11ed4ba6151cb3229cd31523377c35da",
+          },
+          {
+            from: "11ed4af4fc65835d9cd363e711dc958a",
+            to: "11ed4dbc97ec762bb52fa3952e31d8ba",
+          },
+          {
+            from: "11ed4af7c40f7bce9cd36d65b52859f3",
+            to: "11ed4ba6151cb3229cd31523377c35da",
+          },
+          {
+            from: "11ed493c21c44723ad41113e97b679bc",
+            to: "11ed4a9c71b95bd4ba124fc11388f162",
+          },
+          {
+            from: "11ed4ba1174a0cf29cd3a75ac9105b64",
+            to: "11ed4ba3f25543b99cd3993ff27c0af0",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed47a0802104118b0c71da0524036d",
+          },
+          {
+            from: "11ed492a61c3a865ad4113e6d7500e5c",
+            to: "11ed4a9c71b95bd4ba124fc11388f162",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed4ba6151cb3229cd31523377c35da",
+          },
+          {
+            from: "11ed4af4fc65835d9cd363e711dc958a",
+            to: "11ed4ba3f25543b99cd3993ff27c0af0",
+          },
+          {
+            from: "11ed4f800af6adea8c96b1b4cad18b89",
+            to: "11ed4a9c71b95bd4ba124fc11388f162",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed4af99a7f4f8e9cd365b61fcdeb4c",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed55a817415e6bbf8dfdf50d0ca358",
+          },
+          {
+            from: "11ed4af99a7f4f8e9cd365b61fcdeb4c",
+            to: "11ed55a817415e6bbf8dfdf50d0ca358",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed55a817415e6bbf8dfdf50d0ca358",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed4ba3f25543b99cd3993ff27c0af0",
+          },
+          {
+            from: "11ed494228b84f31ad416faaaf225897",
+            to: "11ed4ba1174a0cf29cd3a75ac9105b64",
+          },
+          {
+            from: "11ed47a0802104118b0c71da0524036d",
+            to: "11ed492a61c3a865ad4113e6d7500e5c",
+          },
+          {
+            from: "11ed4e125645dbb4b52fd7f035ea70fc",
+            to: "11ed4ba1174a0cf29cd3a75ac9105b64",
+          },
+          {
+            from: "11ed4b9f592e67ef9cd3c956ea3234c4",
+            to: "11ed4ba1174a0cf29cd3a75ac9105b64",
+          },
+          {
+            from: "11ed4e1108307f93b52f711949535c39",
+            to: "11ed492a61c3a865ad4113e6d7500e5c",
+          },
+          {
+            from: "11ed4afedad05b8e9cd399039b1e1a8c",
+            to: "11ed4ba1174a0cf29cd3a75ac9105b64",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed4ba1174a0cf29cd3a75ac9105b64",
+          },
+          {
+            from: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            to: "11ed4b9f592e67ef9cd3c956ea3234c4",
+          },
+          {
+            from: "11ed4afd64bb489a9cd3b948743abeb7",
+            to: "11ed4b9f592e67ef9cd3c956ea3234c4",
+          },
+          {
+            from: "11ed47c52ae7b1b48b0c31aa6af07f27",
+            to: "11ed4b9f592e67ef9cd3c956ea3234c4",
+          },
         ],
-        scc:[
-          ["11","21","31","44"],
-          ["57","63","75"]
-        ]
-      }, //json数据
+        points: [
+          {
+            id: "11ed4af4fc65835d9cd363e711dc958a",
+            level: 1,
+            name: "0901税金假设表",
+            tip: "0901税金假设表 11ed4af4fc65835d9cd363e711dc958a",
+          },
+          {
+            id: "11ed4ba1174a0cf29cd3a75ac9105b64",
+            level: 2,
+            name: "0908跨期分摊后成本",
+            tip: "0908跨期分摊后成本 11ed4ba1174a0cf29cd3a75ac9105b64",
+          },
+          {
+            id: "11ed4e125645dbb4b52fd7f035ea70fc",
+            level: 2,
+            name: "1003项目各期利润预算（报表口径）",
+            tip: "1003项目各期利润预算（报表口径） 11ed4e125645dbb4b52fd7f035ea70fc",
+          },
+          {
+            id: "11ed4a9c71b95bd4ba124fc11388f162",
+            level: 6,
+            name: "0703前期及工程成本支付计划",
+            tip: "0703前期及工程成本支付计划 11ed4a9c71b95bd4ba124fc11388f162",
+          },
+          {
+            id: "11ed493c21c44723ad41113e97b679bc",
+            level: 1,
+            name: "9902版本属性维护表",
+            tip: "9902版本属性维护表 11ed493c21c44723ad41113e97b679bc",
+          },
+          {
+            id: "11ed4e1108307f93b52f711949535c39",
+            level: 4,
+            name: "1002项目整体利润表_按年（报表口径）",
+            tip: "1002项目整体利润表_按年（报表口径） 11ed4e1108307f93b52f711949535c39",
+          },
+          {
+            id: "11ed493d0b698245ad41abb48157cfe0",
+            level: 1,
+            name: "9903组织属性维护表",
+            tip: "9903组织属性维护表 11ed493d0b698245ad41abb48157cfe0",
+          },
+          {
+            id: "11ed47a0802104118b0c71da0524036d",
+            level: 2,
+            name: "0301开发节奏（项目）",
+            tip: "0301开发节奏（项目） 11ed47a0802104118b0c71da0524036d",
+          },
+          {
+            id: "11ed4f756b0e24218c9693317591e101",
+            level: 1,
+            name: "1502收购前项目利润表（报表口径）",
+            tip: "1502收购前项目利润表（报表口径） 11ed4f756b0e24218c9693317591e101",
+          },
+          {
+            id: "11ed494228b84f31ad416faaaf225897",
+            level: 3,
+            name: "0702土地费用业态明细",
+            tip: "0702土地费用业态明细 11ed494228b84f31ad416faaaf225897",
+          },
+          {
+            id: "11ed47c52ae7b1b48b0c31aa6af07f27",
+            level: 2,
+            name: "0202面积指标（分期业态）",
+            tip: "0202面积指标（分期业态） 11ed47c52ae7b1b48b0c31aa6af07f27",
+          },
+          {
+            id: "11ed4afd64bb489a9cd3b948743abeb7",
+            level: 1,
+            name: "0904主数据分期和清算分期对应关系",
+            tip: "0904主数据分期和清算分期对应关系 11ed4afd64bb489a9cd3b948743abeb7",
+          },
+          {
+            id: "11ed4ba6151cb3229cd31523377c35da",
+            level: 3,
+            name: "0910土增税预缴",
+            tip: "0910土增税预缴 11ed4ba6151cb3229cd31523377c35da",
+          },
+          {
+            id: "11ed4f800af6adea8c96b1b4cad18b89",
+            level: 1,
+            name: "1503收购前项目现金流量表",
+            tip: "1503收购前项目现金流量表 11ed4f800af6adea8c96b1b4cad18b89",
+          },
+          {
+            id: "11ed55091757096abf8d9bf316d877f7",
+            level: 2,
+            name: "1005已售未结毛利结转表（报表口径）",
+            tip: "1005已售未结毛利结转表（报表口径） 11ed55091757096abf8d9bf316d877f7",
+          },
+          {
+            id: "11ed4f7322c607d78c968fb192178199",
+            level: 1,
+            name: "1501收并购前销售及结转表",
+            tip: "1501收并购前销售及结转表 11ed4f7322c607d78c968fb192178199",
+          },
+          {
+            id: "11ed55a817415e6bbf8dfdf50d0ca358",
+            level: 3,
+            name: "0915税金支付明细表_过渡",
+            tip: "0915税金支付明细表_过渡 11ed55a817415e6bbf8dfdf50d0ca358",
+          },
+          {
+            id: "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+            level: 5,
+            name: "0913企业所得税（报表口径）",
+            tip: "0913企业所得税（报表口径） 11ed4dbe79b5dcc5b52f8f21fbfcb471",
+          },
+          {
+            id: "11ed4dbc97ec762bb52fa3952e31d8ba",
+            level: 2,
+            name: "0911视同销售",
+            tip: "0911视同销售 11ed4dbc97ec762bb52fa3952e31d8ba",
+          },
+          {
+            id: "11ed47a716495ad78b0c5dd3411e5ae6",
+            level: 1,
+            name: "0302开发节奏（楼栋）",
+            tip: "0302开发节奏（楼栋） 11ed47a716495ad78b0c5dd3411e5ae6",
+          },
+          {
+            id: "11ed492a61c3a865ad4113e6d7500e5c",
+            level: 5,
+            name: "0105其他财务假设",
+            tip: "0105其他财务假设 11ed492a61c3a865ad4113e6d7500e5c",
+          },
+          {
+            id: "11ed492d892d80efad4113b58d3f9794",
+            level: 1,
+            name: "0501品牌使用费、包干费结余、担保费情况",
+            tip: "0501品牌使用费、包干费结余、担保费情况 11ed492d892d80efad4113b58d3f9794",
+          },
+          {
+            id: "11ed4abf5c518a5eab6c79ca1c2f3745",
+            level: 3,
+            name: "0802收入结转表（报表口径）",
+            tip: "0802收入结转表（报表口径） 11ed4abf5c518a5eab6c79ca1c2f3745",
+          },
+          {
+            id: "11ed4e1372ab7e7eb52f51859441d9af",
+            level: 2,
+            name: "1004签约利润表（报表口径）",
+            tip: "1004签约利润表（报表口径） 11ed4e1372ab7e7eb52f51859441d9af",
+          },
+          {
+            id: "11ed4b9f592e67ef9cd3c956ea3234c4",
+            level: 2,
+            name: "0907需跨期成本_分摊明细表",
+            tip: "0907需跨期成本_分摊明细表 11ed4b9f592e67ef9cd3c956ea3234c4",
+          },
+          {
+            id: "11ed4af99a7f4f8e9cd365b61fcdeb4c",
+            level: 2,
+            name: "0905清算业态拆分比例",
+            tip: "0905清算业态拆分比例 11ed4af99a7f4f8e9cd365b61fcdeb4c",
+          },
+          {
+            id: "11ed4ab9eb45ab74ab6cfffb1df92105",
+            level: 4,
+            name: "0704项目成本预算表（报表口径）",
+            tip: "0704项目成本预算表（报表口径） 11ed4ab9eb45ab74ab6cfffb1df92105",
+          },
+          {
+            id: "11ed4af7c40f7bce9cd36d65b52859f3",
+            level: 1,
+            name: "0903土增税税率假设",
+            tip: "0903土增税税率假设 11ed4af7c40f7bce9cd36d65b52859f3",
+          },
+          {
+            id: "11ed4afedad05b8e9cd399039b1e1a8c",
+            level: 1,
+            name: "0906不跨期成本_不可扣除成本明细表",
+            tip: "0906不跨期成本_不可扣除成本明细表 11ed4afedad05b8e9cd399039b1e1a8c",
+          },
+          {
+            id: "11ed4dc090179ed3b52f1b5e2b8a58bf",
+            level: 5,
+            name: "0914税金支付明细表（报表口径）",
+            tip: "0914税金支付明细表（报表口径） 11ed4dc090179ed3b52f1b5e2b8a58bf",
+          },
+          {
+            id: "11ed5694755b7571bf8d3117534e83dc",
+            level: 2,
+            name: "0803收入结转表（报表口径）过渡表",
+            tip: "0803收入结转表（报表口径）过渡表 11ed5694755b7571bf8d3117534e83dc",
+          },
+          {
+            id: "11ed4dbd5336ef2ab52f0b5eef368153",
+            level: 6,
+            name: "0912土增税全盘清算",
+            tip: "0912土增税全盘清算 11ed4dbd5336ef2ab52f0b5eef368153",
+          },
+          {
+            id: "11ed49284dc9e611ad41e792b5469257",
+            level: 2,
+            name: "0503管理费用明细表",
+            tip: "0503管理费用明细表 11ed49284dc9e611ad41e792b5469257",
+          },
+          {
+            id: "11ed4abe2b86a759ab6c7bc118077866",
+            level: 2,
+            name: "0801结转假设表",
+            tip: "0801结转假设表 11ed4abe2b86a759ab6c7bc118077866",
+          },
+          {
+            id: "11ed47b4c7570e618b0c45ab5d9c9a58",
+            level: 1,
+            name: "0401销售及回款计划",
+            tip: "0401销售及回款计划 11ed47b4c7570e618b0c45ab5d9c9a58",
+          },
+          {
+            id: "11ed48476c9b055b88644b35f89b6fbb",
+            level: 4,
+            name: "0502营销费用明细表",
+            tip: "0502营销费用明细表 11ed48476c9b055b88644b35f89b6fbb",
+          },
+          {
+            id: "11ed4ba3f25543b99cd3993ff27c0af0",
+            level: 3,
+            name: "0909清算业态间成本分摊",
+            tip: "0909清算业态间成本分摊 11ed4ba3f25543b99cd3993ff27c0af0",
+          },
+        ],
+        scc: [
+          [
+            "11ed4ba1174a0cf29cd3a75ac9105b64",
+            "11ed4e125645dbb4b52fd7f035ea70fc",
+            "11ed492a61c3a865ad4113e6d7500e5c",
+            "11ed4abf5c518a5eab6c79ca1c2f3745",
+            "11ed4a9c71b95bd4ba124fc11388f162",
+            "11ed4e1108307f93b52f711949535c39",
+            "11ed4ab9eb45ab74ab6cfffb1df92105",
+            "11ed4dbe79b5dcc5b52f8f21fbfcb471",
+            "11ed4dc090179ed3b52f1b5e2b8a58bf",
+            "11ed48476c9b055b88644b35f89b6fbb",
+            "11ed4dbd5336ef2ab52f0b5eef368153",
+            "11ed4ba3f25543b99cd3993ff27c0af0",
+          ],
+        ],
+      },
       //由json转化的G6的数据
       data: null, //SCC + 非SCC 节点的数据
-      data2:null, //SCC 节点的数据
-      data3:null,//非SCC 节点的数据
-      data4:[],//无数据
+      data2: null, //SCC 节点的数据
+      data3: null, //非SCC 节点的数据
+      data4: [], //无数据
       graph: null, //G6的实例
       isShowEditor: false,
       isShowAdjustSpace: false,
-      isShowClickNode:false,
-      value1:"line",
-      value2:"line",
-      clickNode:{
-        id:null,
-        name:null,
-        level:null
+      isShowClickNode: false,
+      value1: "line",
+      value2: "line",
+      clickNode: {
+        id: null,
+        name: null,
+        level: null,
       },
-      checkSCC:true,
-      checkNotSCC:true,
-
-      distanceX: 350,
-      distanceY: 250,
-      nodeWidth:200,
-      nodeHeight:50,
+      checkSCC: true,
+      checkNotSCC: true,
+      distanceX: 600,
+      distanceY: 600,
+      nodeWidth: 400,
+      nodeHeight: 100,
       fontSize: 30,
-
       options1: [
         {
           label: "直线",
@@ -302,8 +806,8 @@ export default {
         },
         {
           label: "隐藏",
-          value: "hide",  
-        }
+          value: "hide",
+        },
       ],
       options2: [
         {
@@ -321,7 +825,7 @@ export default {
         {
           label: "圆弧",
           value: "arc",
-        }
+        },
       ],
     };
   },
@@ -350,8 +854,8 @@ export default {
       let y;
       //计算节点
       let nodes = [];
-      let nodes2 = []
-      let nodes3 = []
+      let nodes2 = [];
+      let nodes3 = [];
       let floorMax = 0;
       arr.forEach((p) => {
         floorMax = floorMax > p.length ? floorMax : p.length;
@@ -362,43 +866,41 @@ export default {
         for (let j = 0; j < arr[i].length; j++) {
           x = this.distanceX * (j + 1 + (floorMax - arr[i].length) / 2);
           //检查是否是scc节点
-          let isSccNode = false
-          this.jsonEditor.scc.forEach(p=>{
-            p.forEach(q=>{
-              if( arr[i][j].id == q){
-                isSccNode = true
+          let isSccNode = false;
+          this.jsonEditor.scc.forEach((p) => {
+            p.forEach((q) => {
+              if (arr[i][j].id == q) {
+                isSccNode = true;
               }
-            })
-          })
-          let obj
-          if(isSccNode){
+            });
+          });
+          let obj;
+          if (isSccNode) {
             obj = {
-            id: arr[i][j].id,
-            x,
-            y,
-            label: arr[i][j].name,
-            conf: arr[i][j].tip,
-            style: {
-            fill: "#D8BFD8",
-          },
-          };
-          }
-          else{
+              id: arr[i][j].id,
+              x,
+              y,
+              label: arr[i][j].name,
+              conf: arr[i][j].tip,
+              style: {
+                fill: "#D8BFD8",
+              },
+            };
+          } else {
             obj = {
-            id: arr[i][j].id,
-            x,
-            y,
-            label: arr[i][j].name,
-            conf: arr[i][j].tip,
-          };
+              id: arr[i][j].id,
+              x,
+              y,
+              label: arr[i][j].name,
+              conf: arr[i][j].tip,
+            };
           }
-           
+
           nodes.push(obj);
-          if(isSccNode){
-            nodes2.push(obj)
-          }
-          else{
-            nodes3.push(obj)
+          if (isSccNode) {
+            nodes2.push(obj);
+          } else {
+            nodes3.push(obj);
           }
         }
       }
@@ -443,17 +945,17 @@ export default {
         edges.push(obj);
       });
       this.data = {
-        nodes:nodes,
-        edges:edges,
+        nodes: nodes,
+        edges: edges,
       };
       this.data2 = {
-        nodes:nodes2,
-        edges:edges,
-      }
+        nodes: nodes2,
+        edges: edges,
+      };
       this.data3 = {
-        nodes:nodes3,
-        edges:edges,
-      }
+        nodes: nodes3,
+        edges: edges,
+      };
     },
     drawGraph() {
       // 定义数据源
@@ -466,8 +968,8 @@ export default {
         // 画布宽高
         defaultNode: {
           //节点的默认配置
-          type:"rect",
-          size: [parseInt(this.nodeWidth),parseInt(this.nodeHeight)],
+          type: "rect",
+          size: [parseInt(this.nodeWidth), parseInt(this.nodeHeight)],
           style: {
             stroke: "#5B8FF9",
             fill: "#C6E5FF",
@@ -547,9 +1049,8 @@ export default {
         const nodeItem = e.item; // 获取被点击的节点元素对象
         graph.setItemState(nodeItem, "click", true); // 设置当前节点的 click 状态为 true
 
-        
         //展示点击节点信息
-        this.showClickNode(e.item._cfg.id)
+        this.showClickNode(e.item._cfg.id);
       });
       // 读取数据
       graph.data(data);
@@ -571,7 +1072,7 @@ export default {
       setTimeout(() => {
         this.graph.node(() => {
           return {
-            size: [parseInt(this.nodeWidth),parseInt(this.nodeHeight)],
+            size: [parseInt(this.nodeWidth), parseInt(this.nodeHeight)],
             labelCfg: {
               style: {
                 fontSize: parseInt(this.fontSize),
@@ -584,7 +1085,7 @@ export default {
         this.graph.render();
 
         //数据更新后 根据checkbox的选项再渲染一次
-        this.onChange()
+        this.onChange();
       }, 0);
     },
     showEditor() {
@@ -603,10 +1104,8 @@ export default {
         this.graph.render();
 
         //数据更新后 根据checkbox的选项再渲染一次
-        this.onChange()
+        this.onChange();
       }, 0);
-
-
     },
     //修改向下的线
     //value 和 this.value1是相同的
@@ -615,59 +1114,54 @@ export default {
     handleChange1(value) {
       //更新边的配置
 
-      if(value == "hide"){
+      if (value == "hide") {
         this.graph.edge((edge) => {
-        if(edge.style.stroke == "grey"){
-          return {
-            type: "line",//这里value等于hide 隐藏后不关心样式 直接设置为line
-            style: {
-            opacity: 0, // 边透明度
-          },
-          };
-        }
-        else{
-          return {
-            type: this.value2,
-            style: {
-            opacity:this.value2=="hide"?0:0.6, // 边透明度 
-          },
-          };
-        }
-      });
-
-      }
-      else{
+          if (edge.style.stroke == "grey") {
+            return {
+              type: "line", //这里value等于hide 隐藏后不关心样式 直接设置为line
+              style: {
+                opacity: 0, // 边透明度
+              },
+            };
+          } else {
+            return {
+              type: this.value2,
+              style: {
+                opacity: this.value2 == "hide" ? 0 : 0.6, // 边透明度
+              },
+            };
+          }
+        });
+      } else {
         this.graph.edge((edge) => {
-        //根据颜色判断是向上还是向下
-        if(edge.style.stroke == "grey"){
-          return {
-            type: value,
-            style: {
-            opacity: 0.6, // 边透明度
-          },
-          };
-        }
-        else{
-          return {
-            type: this.value2,
-            style: {
-            opacity: 0.6, // 边透明度
-          },
-          };
-        }
-      });
+          //根据颜色判断是向上还是向下
+          if (edge.style.stroke == "grey") {
+            return {
+              type: value,
+              style: {
+                opacity: 0.6, // 边透明度
+              },
+            };
+          } else {
+            return {
+              type: this.value2,
+              style: {
+                opacity: 0.6, // 边透明度
+              },
+            };
+          }
+        });
       }
       this.graph.render();
     },
     handleChange2(value) {
       this.graph.edge((edge) => {
         //根据颜色判断是向上还是向xia
-        if(edge.style.stroke == "grey"){
+        if (edge.style.stroke == "grey") {
           return {
             type: this.value1, //如果value1是hide,由于g6没有hide,会隐藏,达到同样的效果
           };
-        }
-        else{
+        } else {
           return {
             type: value,
           };
@@ -676,47 +1170,43 @@ export default {
       this.graph.render();
     },
     //由点击节点触发
-    showClickNode(id){
-      this.isShowClickNode = true
+    showClickNode(id) {
+      this.isShowClickNode = true;
       //弹出右侧框
-      this.$refs.showNode.style.right = 0 + 'px' 
-      let node
-      this.jsonEditor.points.forEach(p=>{
-        if(id == p.id){
-          node = p
+      this.$refs.showNode.style.right = 0 + "px";
+      let node;
+      this.jsonEditor.points.forEach((p) => {
+        if (id == p.id) {
+          node = p;
         }
-      })  
-      this.clickNode.id = node.id
-      this.clickNode.name = node.name
-      this.clickNode.level = node.level
+      });
+      this.clickNode.id = node.id;
+      this.clickNode.name = node.name;
+      this.clickNode.level = node.level;
     },
     //由点击按钮触发
-    showClickNodeButton(){
-      this.isShowClickNode = !this.isShowClickNode
-      if(this.isShowClickNode){
-        this.$refs.showNode.style.right = 0 + 'px' 
-      }
-      else{
-        this.$refs.showNode.style.right = -300 + 'px' 
+    showClickNodeButton() {
+      this.isShowClickNode = !this.isShowClickNode;
+      if (this.isShowClickNode) {
+        this.$refs.showNode.style.right = 0 + "px";
+      } else {
+        this.$refs.showNode.style.right = -300 + "px";
       }
     },
     //点击checkbox触发 显示相应数据
-    onChange(){
-      let data = []
-      if(this.checkSCC){
-        if(this.checkNotSCC){
-          data = this.data
+    onChange() {
+      let data = [];
+      if (this.checkSCC) {
+        if (this.checkNotSCC) {
+          data = this.data;
+        } else {
+          data = this.data2;
         }
-        else{
-          data = this.data2
-        }
-      }
-      else{
-        if(this.checkNotSCC){
-          data = this.data3
-        }
-        else{
-          data = this.data4
+      } else {
+        if (this.checkNotSCC) {
+          data = this.data3;
+        } else {
+          data = this.data4;
         }
       }
       // 读取数据
@@ -724,15 +1214,14 @@ export default {
       // 渲染图
       this.graph.render();
     },
-    onChangeSCC(){
-      this.checkSCC = !this.checkSCC
-      this.onChange()
+    onChangeSCC() {
+      this.checkSCC = !this.checkSCC;
+      this.onChange();
     },
-    onChangeNotSCC(){
-      this.checkNotSCC = !this.checkNotSCC
-      this.onChange()
-    }
-
+    onChangeNotSCC() {
+      this.checkNotSCC = !this.checkNotSCC;
+      this.onChange();
+    },
   },
   mounted() {
     // this.jsonEditor = json
@@ -784,7 +1273,7 @@ body {
   top: 500px;
 }
 
-.showNode div{
+.showNode div {
   word-break: break-all;
 }
 
@@ -825,7 +1314,7 @@ body {
   justify-content: space-around;
 }
 
-.menu2{
+.menu2 {
   position: absolute;
   right: 20px;
   top: 60px;
@@ -836,8 +1325,8 @@ body {
   align-items: center;
 }
 
-.menu2 .ant-checkbox-wrapper{
-  margin-right: 20px;
+.menu2 .ant-checkbox-wrapper {
+  margin-right: 8px;
 }
 
 .menu .ant-btn,
@@ -853,10 +1342,8 @@ body {
   border-radius: 4px;
 }
 
-.selectLabel{
+.selectLabel {
   line-height: 30px;
   margin-right: 4px;
 }
-
-
 </style>
